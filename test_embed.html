@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Police Prep Portal (Embed Test)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+    .nav {
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .nav-links a.active {
+      color: #38bdf8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .portal-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .portal-header h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .portal-header p {
+      color: #64748b;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .widget-container {
+      background: #0b111e;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border: 1px solid #1e293b;
+    }
+    .demo-instructions {
+      margin-top: 3rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .demo-instructions h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #0f172a;
+    }
+    .demo-instructions code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mock Navigation -->
+  <nav class="nav">
+    <h1>Sarkari Exams Prep</h1>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Syllabus</a>
+      <a href="#" class="active">PET Fitness Tracker</a>
+      <a href="#">Mock Tests</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="portal-header">
+      <h2>Physical Efficiency Test (PET) Hub</h2>
+      <p>Analyze your physical benchmarks for state constabulary and sub-inspector exams. Enter details below to run your diagnostics.</p>
+    </div>
+
+    <!-- Container where the tracker is embedded -->
+    <div class="widget-container">
+      <!-- In a real deployment, this can be an iframe or dynamic widget: -->
+      <iframe src="index.html" width="100%" height="850" style="border:none;" title="Embedded PET Readiness Tracker"></iframe>
+    </div>
+
+    <!-- Demo details -->
+    <div class="demo-instructions">
+      <h3>Integration Demo Details</h3>
+      <p>This page demonstrates how the <code>PET Readiness Tracker</code> is loaded inside an <code>&lt;iframe&gt;</code> element on your website's pages. The layout uses CSS to seamlessly isolate the widget's dark-mode styles from the parent page's light theme, preserving clean typography and interactivity.</p>
+      <p>To view the standalone application directly, open <a href="index.html" target="_blank">index.html</a> in your browser.</p>
+    </div>
+  </div>
+
+</body>
+</html>

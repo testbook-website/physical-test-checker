@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indian Police PET Readiness Tracker & Fitness Planner</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Login Overlay (Shown to unregistered users) -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-badge-header">
+        <svg class="police-badge-login" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="url(#loginBadgeGrad)" stroke="#1e3a8a" stroke-width="1.5"/>
+          <path d="M12 7V16M9 10H15M9 13H15" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="loginBadgeGrad" x1="12" y1="2" x2="12" y2="23" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1e3a8a"/>
+              <stop offset="1" stop-color="#3b82f6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h2>PET READINESS TRACKER</h2>
+      <p class="login-desc">Enter your details to unlock the state-wise physical efficiency diagnostics and customized training planner.</p>
+      
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="userName">Full Name</label>
+          <input type="text" id="userName" required class="form-input-field" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label for="userMobile">Mobile Number</label>
+          <input type="tel" id="userMobile" required pattern="[6-9][0-9]{9}" class="form-input-field" placeholder="10-digit mobile number">
+          <span class="field-hint">e.g. 9876543210</span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="startBtn">
+          Access Tracker Dashboard
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 0.25rem;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App Content (Hidden until logged in, styled in CSS) -->
+  <div class="app-container" id="appMainContainer">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <svg class="police-badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 2Z" fill="url(#badgeGrad)" stroke="#1e3a8a" stroke-width="1.5"/>
+          <path d="M12 7V16M9 10H15M9 13H15" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="badgeGrad" x1="12" y1="2" x2="12" y2="23" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1e3a8a"/>
+              <stop offset="1" stop-color="#3b82f6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="title-meta">
+          <h1>POLICE PET <span class="accent">READINESS TRACKER</span></h1>
+          <p class="subtitle">State-wise Physical Test Diagnostics & Personalized Training Planner</p>
+        </div>
+        
+        <!-- Welcome badge -->
+        <div class="user-welcome" id="userWelcomeBadge">
+          <span>Welcome, <strong id="loggedInUser">Candidate</strong></span>
+          <button id="logoutBtn" class="logout-link">Change Profile</button>
+        </div>
+      </div>
+      
+      <!-- Selection Controls -->
+      <div class="controls-card">
+        <div class="control-group">
+          <label for="stateSelect">Target State</label>
+          <select id="stateSelect" class="form-select">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="postSelect">Exam Post</label>
+          <select id="postSelect" class="form-select">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="genderSelect">Gender</label>
+          <select id="genderSelect" class="form-select">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="categorySelect">Category</label>
+          <select id="categorySelect" class="form-select">
+            <option value="general">General / OBC</option>
+            <option value="reserved">SC / ST</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+      
+      <!-- Left Column: Inputs -->
+      <section class="dashboard-section inputs-section">
+        <!-- Physical Standards (PMT) -->
+        <div class="glass-card input-card">
+          <div class="card-header">
+            <div class="header-icon pmt-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.5a2.5 2.5 0 0 1 2.5-2.5h11a2.5 2.5 0 0 1 2.5 2.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-5.5z"></path><path d="M6 10h12"></path><path d="M12 2v8"></path><path d="M12 2 9 5"></path><path d="M12 2l3 3"></path></svg>
+            </div>
+            <h2>1. Physical Measurements (PMT)</h2>
+          </div>
+          <p class="card-desc">Verify your physical dimensions against minimum eligibility rules.</p>
+          <div class="inputs-grid" id="pmtInputsContainer">
+            <!-- Generated dynamically based on selected standards -->
+          </div>
+        </div>
+
+        <!-- Physical Efficiency (PET) -->
+        <div class="glass-card input-card">
+          <div class="card-header">
+            <div class="header-icon pet-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h-4V4c0-1.1-.9-2-2-2S10 2.9 10 4v4H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2z"></path><path d="M12 8v10"></path></svg>
+            </div>
+            <h2>2. Physical Efficiency Performance (PET)</h2>
+          </div>
+          <p class="card-desc">Enter your current test achievements (lower run times and higher jumps are better).</p>
+          <div class="inputs-grid" id="petInputsContainer">
+            <!-- Generated dynamically based on selected standards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Diagnostics & Score -->
+      <section class="dashboard-section results-section">
+        <!-- Readiness Gauge -->
+        <div class="glass-card score-card">
+          <div class="score-display">
+            <div class="radial-progress-wrapper">
+              <svg class="radial-svg" viewBox="0 0 120 120">
+                <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
+                <circle class="circle-progress" cx="60" cy="60" r="50" style="stroke-dasharray: 314; stroke-dashoffset: 314;"></circle>
+              </svg>
+              <div class="score-text">
+                <span class="score-percent" id="readinessScore">0%</span>
+                <span class="score-label" id="readinessLabel">READINESS</span>
+              </div>
+            </div>
+            <div class="score-summary">
+              <h3>Overall PET Readiness</h3>
+              <p id="overallRemarks">Enter your details to generate your performance profile.</p>
+              <div class="badge-row">
+                <span class="status-badge" id="pmtStatusBadge">PMT: Pending</span>
+                <span class="status-badge" id="petStatusBadge">PET: Pending</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lag Areas Diagnostics -->
+        <div class="glass-card lag-card">
+          <div class="card-header">
+            <div class="header-icon alert-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <h2>Deficiency & Lag Diagnostics</h2>
+          </div>
+          <div class="diagnostics-container" id="diagnosticsList">
+            <div class="empty-state">
+              <p>Your diagnostic breakdown will appear here after entering measurements.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Layout: Training Plan -->
+    <section class="training-plan-section">
+      <div class="glass-card training-card">
+        <div class="training-header">
+          <div class="header-left">
+            <div class="header-icon plan-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div>
+              <h2>Personalized 4-Week PET Preparation Plan</h2>
+              <p class="card-desc">Weekly training schedule custom-tailored to improve your specific lagging areas.</p>
+            </div>
+          </div>
+          <!-- Weekly navigation tab links -->
+          <div class="tab-navigation" id="planTabs">
+            <button class="tab-btn active" data-week="1">Week 1</button>
+            <button class="tab-btn" data-week="2">Week 2</button>
+            <button class="tab-btn" data-week="3">Week 3</button>
+            <button class="tab-btn" data-week="4">Week 4</button>
+          </div>
+        </div>
+
+        <div class="training-content" id="trainingPlanContent">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="nutrition-tips-container" id="nutritionContainer">
+          <!-- Dynamic tips on recovery/diet based on performance -->
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Include Scripts -->
+  <script src="standards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
