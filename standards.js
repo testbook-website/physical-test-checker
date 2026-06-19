@@ -379,7 +379,7 @@ const STATE_STANDARDS = {
         }
       }
     }
-  }
+  },
   ssc_gd: {
     name: "SSC GD",
     posts: {
