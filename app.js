@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const stateSelect = document.getElementById("stateSelect");
   const postSelect = document.getElementById("postSelect");
   const genderSelect = document.getElementById("genderSelect");
+  const ageSelect = document.getElementById("ageSelect");
   const categorySelect = document.getElementById("categorySelect");
 
   const pmtInputsContainer = document.getElementById("pmtInputsContainer");
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     postSelect.addEventListener("change", () => { renderForm(); syncDataToSheet(); });
     genderSelect.addEventListener("change", () => { renderForm(); syncDataToSheet(); });
+    ageSelect.addEventListener("change", () => { renderForm(); syncDataToSheet(); });
     categorySelect.addEventListener("change", () => { renderForm(); syncDataToSheet(); });
 
     // Tab Listeners for Training Plan
@@ -145,10 +147,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const state = stateSelect.value;
     const post = postSelect.value;
     const gender = genderSelect.value;
+    const age = ageSelect.value;
     const category = categorySelect.value;
 
     // Build the query parameter URL for GET sync
-    const syncUrl = `${GOOGLE_SHEET_SCRIPT_URL}?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&state=${encodeURIComponent(STATE_STANDARDS[state]?.name || state)}&post=${encodeURIComponent(post)}&gender=${encodeURIComponent(gender)}&category=${encodeURIComponent(category)}`;
+    const syncUrl = `${GOOGLE_SHEET_SCRIPT_URL}?name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&state=${encodeURIComponent(STATE_STANDARDS[state]?.name || state)}&post=${encodeURIComponent(post)}&gender=${encodeURIComponent(gender)}&age=${encodeURIComponent(age)}&category=${encodeURIComponent(category)}`;
 
     // Perform fire-and-forget submission using no-cors mode to prevent CORS blocks
     fetch(syncUrl, { mode: 'no-cors' })
@@ -180,6 +183,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const post = postSelect.value;
     const gender = genderSelect.value;
     return STATE_STANDARDS[state]?.posts[post]?.[gender] || null;
+  }
+
+  // Resolve target limit based on selected age
+  function resolveFieldLimit(field, isTimeEvent) {
+    const age = ageSelect.value;
+    let limit = isTimeEvent ? field.limitSeconds : field.target;
+    
+    if (age === "31_to_40" && field.age31_40 !== undefined) {
+      limit = field.age31_40;
+    } else if (age === "above_40" && field.ageAbove40 !== undefined) {
+      limit = field.ageAbove40;
+    }
+    return limit;
   }
 
   // Render PMT and PET form fields dynamically
@@ -243,12 +259,15 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       }
 
+      const isTimeEvent = field.unit === "min:sec" || key === "run100m";
+      const limit = resolveFieldLimit(field, isTimeEvent);
+
       inputGroup.innerHTML = `
         <div class="input-header">
           <label>${field.label}</label>
           <span class="req-badge">
-            ${field.unit === "min:sec" ? "Max" : field.key === "run100m" ? "Max" : "Min"}: 
-            ${field.unit === "min:sec" ? formatSecondsToMinutes(field.limitSeconds) : field.target} ${field.unit}
+            ${field.unit === "min:sec" ? "Max" : key === "run100m" ? "Max" : "Min"}: 
+            ${field.unit === "min:sec" ? formatSecondsToMinutes(limit) : limit} ${field.unit}
           </span>
         </div>
         <div class="input-wrapper">
@@ -350,13 +369,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      const isTimeEvent = (field.unit === "min:sec" || key === "run100m");
+      const limit = resolveFieldLimit(field, isTimeEvent);
+
       if (isPending) {
         setFieldState(cardGroup, indicator, "pending");
-        validationResults.pet.items[key] = { status: "pending", val: null, required: field.limitSeconds || field.target, isTime: field.unit === "min:sec" || key === "run100m" };
+        validationResults.pet.items[key] = { status: "pending", val: null, required: limit, isTime: isTimeEvent };
         petAllPass = false;
       } else {
-        const isTimeEvent = (field.unit === "min:sec" || key === "run100m");
-        const limit = field.limitSeconds || field.target;
         
         let eventPassed = false;
         let eventScore = 0;

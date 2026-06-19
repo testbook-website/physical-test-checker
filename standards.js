@@ -17,7 +17,7 @@ const STATE_STANDARDS = {
           pet: {
             run: { target: 1600, limitSeconds: 360, label: "1600m Run", unit: "min:sec", placeholder: "06:00" },
             longJump: { target: 14.0, label: "Long Jump", unit: "feet", placeholder: "14.0" },
-            highJump: { target: 3.75, label: "High Jump", unit: "feet", placeholder: "3.75" }
+            highJump: { target: 3.75, age31_40: 3.5, ageAbove40: 3.25, label: "High Jump", unit: "feet", placeholder: "3.75" }
           }
         },
         female: {
@@ -27,7 +27,7 @@ const STATE_STANDARDS = {
           pet: {
             run: { target: 1600, limitSeconds: 480, label: "1600m Run", unit: "min:sec", placeholder: "08:00" },
             longJump: { target: 10.0, label: "Long Jump", unit: "feet", placeholder: "10.0" },
-            highJump: { target: 3.0, label: "High Jump", unit: "feet", placeholder: "3.0" }
+            highJump: { target: 3.0, age31_40: 2.75, ageAbove40: 2.5, label: "High Jump", unit: "feet", placeholder: "3.0" }
           }
         }
       },
