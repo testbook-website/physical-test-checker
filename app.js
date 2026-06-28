@@ -215,9 +215,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Calculate requirement with reserved category discount if applicable
       let requiredVal = field.min;
       if (isReserved) {
-        if (key === "height") requiredVal -= 2;
-        if (key === "chest") requiredVal -= 2;
-        if (key === "chestExpanded") requiredVal -= 2;
+        if (field.minReserved !== undefined) {
+          requiredVal = field.minReserved;
+        } else if (key === "height" || key === "chest" || key === "chestExpanded") {
+          requiredVal -= 2;
+        }
       }
 
       const inputGroup = document.createElement("div");
@@ -315,7 +317,11 @@ document.addEventListener("DOMContentLoaded", () => {
       
       let requiredVal = config.pmt[key].min;
       if (isReserved) {
-        if (key === "height" || key === "chest" || key === "chestExpanded") requiredVal -= 2;
+        if (config.pmt[key].minReserved !== undefined) {
+          requiredVal = config.pmt[key].minReserved;
+        } else if (key === "height" || key === "chest" || key === "chestExpanded") {
+          requiredVal -= 2;
+        }
       }
 
       const cardGroup = document.getElementById(`group-pmt-${key}`);

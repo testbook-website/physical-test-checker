@@ -166,6 +166,28 @@ const STATE_STANDARDS = {
             run: { target: 2400, limitSeconds: 960, label: "2.4 Km Run", unit: "min:sec", placeholder: "16:00" }
           }
         }
+      },
+      homeguard: {
+        name: "Homeguard",
+        male: {
+          pmt: {
+            height: { min: 167, minReserved: 162, label: "Height (cm)", unit: "cm" },
+            chest: { min: 78.8, minReserved: 76.5, label: "Chest (cm)", unit: "cm" },
+            chestExpanded: { min: 83.8, minReserved: 81.5, label: "Chest Expanded (cm)", unit: "cm" }
+          },
+          pet: {
+            run: { target: 4800, limitSeconds: 1680, label: "4.8 Km Run", unit: "min:sec", placeholder: "28:00" }
+          }
+        },
+        female: {
+          pmt: {
+            height: { min: 152, minReserved: 147, label: "Height (cm)", unit: "cm" },
+            weight: { min: 40, label: "Weight (kg)", unit: "kg" }
+          },
+          pet: {
+            run: { target: 2400, limitSeconds: 960, label: "2.4 Km Run", unit: "min:sec", placeholder: "16:00" }
+          }
+        }
       }
     }
   },
